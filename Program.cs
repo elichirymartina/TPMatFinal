@@ -36,9 +36,13 @@ do
                 }
             }
 
+            //Elige si mostrar todos los términos o solo el último
             switch (quiereTodos)
             {
                 case 1:
+                    //El último
+                    resultado = numeroInicial;
+
                     for (i = 0; i < cantidadTerminos; i++)
                     {
                         resultado = numeroInicial + i * razonOdiferencia;
@@ -47,15 +51,19 @@ do
                     break;
 
                 case 2:
+                    //Todos
+                    resultado = numeroInicial;
+
                     for (i = 0; i < cantidadTerminos; i++)
                     {
                         resultado = numeroInicial + i * razonOdiferencia;
                         Console.WriteLine("a" + i + "=" + resultado);
+
                     }
                     break;
 
                 default:
-                    Console.WriteLine("Ingrese un valor válido para las opciones presentadas");
+                    Console.WriteLine("Ingrese un valor válido para las opciones presentadas. Elige la opción 1 o 2.");
                     break;
             }
 
@@ -101,23 +109,30 @@ do
             switch (quiereTodos)
             {
                 case 1:
+                    resultado = numeroInicial;
+
                     for (i = 0; i < cantidadTerminos; i++)
                     {
                         resultado = numeroInicial *= razonOdiferencia;
+
                     }
                     Console.WriteLine("a" + i + "=" + resultado);
                     break;
 
                 case 2:
+                    resultado = numeroInicial;
+
                     for (i = 0; i < cantidadTerminos; i++)
                     {
                         resultado = numeroInicial *= razonOdiferencia;
-                        Console.WriteLine($"a{i + 1} = {resultado}");
+
+
+                        Console.WriteLine("a" + i + "=" + resultado);
                     }
                     break;
 
                 default:
-                    Console.WriteLine("Ingrese un valor válido para las opciones presentadas");
+                    Console.WriteLine("Ingrese un valor válido para las opciones presentadas. Presione 1 o 2.");
                     break;
             
     }
@@ -138,9 +153,11 @@ do
             break;
 
         case 3: // Sucesión de conjunto
+            
+            
             do
             {
-                cantidadTerminos = (int)validarEntradaNumerica("Ingrese qué cantidad de términos escribirá del conjunto.");
+                cantidadTerminos = (int)validarEntradaNumerica("Ingrese qué cantidad de términos escribirá del conjunto. Para mayor presición, ingrese mínimamente 3 términos.");
 
                 if (cantidadTerminos < 3)
                 {
@@ -148,12 +165,36 @@ do
                 }
             } while (cantidadTerminos < 3);
 
+            
             decimal[] conjunto = new decimal[cantidadTerminos];
 
             for (i = 0; i < cantidadTerminos; i++)
             {
                 conjunto[i] = validarEntradaNumerica($"Ingrese el término {i + 1}");
+
             }
+
+            bool esAritmetica = true;
+            bool esGeometrica = true;
+            decimal diferenciaAritmetica = conjunto[1] - conjunto[0];
+            decimal razonGeometrica = conjunto[1] / conjunto[0];
+
+            for (i = 2; i < cantidadTerminos; i++)
+            {
+                if (conjunto[i] - conjunto[i - 1] != diferenciaAritmetica)
+                    esAritmetica = false;
+
+                if (conjunto[i] / conjunto[i - 1] != razonGeometrica)
+                    esGeometrica = false;
+            }
+
+            if (esAritmetica)
+                Console.WriteLine("El conjunto es una sucesión aritmética.");
+            else if (esGeometrica)
+                Console.WriteLine("El conjunto es una sucesión geométrica.");
+            else
+                Console.WriteLine("El conjunto no es una sucesión.");
+
 
             if (EsAlternante(conjunto))
             {
@@ -186,7 +227,7 @@ do
             break;
 
         default:
-            Console.WriteLine("Opción no válida. Intente nuevamente.");
+            Console.WriteLine("Opción no válida. Elija una opción: 1.Aritmética; 2.Geométrica; 3.Conjunto; 4.Salir");
             break;
 
     }
@@ -217,7 +258,7 @@ static decimal validarEntradaNumerica(string mensaje)
         }
         else
         {
-            Console.WriteLine("Error: Ingrese un número válido");
+            Console.WriteLine("Error: Ingrese un número válido; ya sea entero, decimal, negativo o positivo. No ingrese letras ni símbolos.");
         }
     }
 }
