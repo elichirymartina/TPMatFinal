@@ -10,7 +10,6 @@ do
     Console.Clear(); // Limpia la consola para una nueva iteración
     opcion = (int)validarEntradaNumerica("Elija una opción presionando el número por teclado \n 1.Aritmética \n 2.Geométrica \n 3.Conjunto \n 4.Salir");
 
-
     switch (opcion)
     {
         case 1: // Sucesión aritmética
@@ -51,7 +50,7 @@ do
                     for (i = 0; i < cantidadTerminos; i++)
                     {
                         resultado = numeroInicial + i * razonOdiferencia;
-                        Console.WriteLine($"a{i + 1} = {resultado}");
+                        Console.WriteLine("a" + i + "=" + resultado);
                     }
                     break;
 
@@ -104,7 +103,7 @@ do
                 case 1:
                     for (i = 0; i < cantidadTerminos; i++)
                     {
-                        resultado = numeroInicial * (decimal)Math.Pow((double)razonOdiferencia, i);
+                        resultado = numeroInicial *= razonOdiferencia;
                     }
                     Console.WriteLine("a" + i + "=" + resultado);
                     break;
@@ -112,8 +111,7 @@ do
                 case 2:
                     for (i = 0; i < cantidadTerminos; i++)
                     {
-                        resultado = numeroInicial * (decimal)Math.Pow((double)razonOdiferencia, i);
-                        sucesionGeometrica[i] = resultado;
+                        resultado = numeroInicial *= razonOdiferencia;
                         Console.WriteLine($"a{i + 1} = {resultado}");
                     }
                     break;
@@ -121,7 +119,8 @@ do
                 default:
                     Console.WriteLine("Ingrese un valor válido para las opciones presentadas");
                     break;
-            }
+            
+    }
 
             // Determina la clasificación de la sucesión geométrica
             if (EsGeomConstante(razonOdiferencia))
@@ -139,8 +138,6 @@ do
             break;
 
         case 3: // Sucesión de conjunto
-            cantidadTerminos = (int)validarEntradaNumerica("Ingrese qué cantidad de términos escribirá del conjunto");
-
             do
             {
                 cantidadTerminos = (int)validarEntradaNumerica("Ingrese qué cantidad de términos escribirá del conjunto.");
@@ -194,7 +191,6 @@ do
 
     }
 
-
     // Mantener la consola abierta después de cada operación
     Console.WriteLine("Presione cualquier tecla para continuar...");
     Console.ReadKey();
@@ -204,8 +200,6 @@ do
 // Fin del programa
 Console.WriteLine("Gracias por usar el programa. Presione cualquier tecla para salir...");
 Console.ReadKey();
-
-
 
 static decimal validarEntradaNumerica(string mensaje)
 {
@@ -245,32 +239,30 @@ static bool EsAritmeticaDecreciente(decimal razonOdiferencia) =>
     razonOdiferencia <= 0;
 
 // Funciones para clasificaciones geométricas
-static bool EsGeomAlternante(decimal[] sucesion)
+static bool EsGeomConstante(decimal razonOdiferencia) =>
+    razonOdiferencia == 1;
+
+static bool EsGeomEstrCreciente(decimal razonOdiferencia) =>
+    razonOdiferencia > 1;
+
+static bool EsGeomCreciente(decimal razonOdiferencia) =>
+    razonOdiferencia >= 1;
+
+static bool EsGeomAlternante(decimal[] conjunto)
 {
-    for (int i = 1; i < sucesion.Length; i++)
+    for (int i = 1; i < conjunto.Length; i++)
     {
-        if ((sucesion[i - 1] > 0 && sucesion[i] > 0) || (sucesion[i - 1] < 0 && sucesion[i] < 0))
-        {
-            return false;
-        }
+        if ((conjunto[i] > 0 && conjunto[i - 1] < 0) || (conjunto[i] < 0 && conjunto[i - 1] > 0))
+            return true;
     }
-    return true;
+    return false;
 }
-static bool EsGeomConstante(decimal razon) =>
-    razon == 1;
 
-static bool EsGeomEstrCreciente(decimal razon) =>
-    razon > 1;
+static bool EsGeomEstrDecreciente(decimal razonOdiferencia) =>
+    razonOdiferencia < 1 && razonOdiferencia > 0;
 
-static bool EsGeomCreciente(decimal razon) =>
-    razon >= 1;
-
-static bool EsGeomEstrDecreciente(decimal razon) =>
-    razon > 0 && razon < 1;
-
-static bool EsGeomDecreciente(decimal razon) =>
-    razon <= 1;
-
+static bool EsGeomDecreciente(decimal razonOdiferencia) =>
+    razonOdiferencia <= 1 && razonOdiferencia > 0;
 
 // Funciones para clasificaciones del conjunto
 static bool EsAlternante(decimal[] conjunto)
@@ -284,15 +276,12 @@ static bool EsAlternante(decimal[] conjunto)
     }
     return true;
 }
-
 static bool EsConjuntoConstante(decimal[] conjunto)
 {
     for (int i = 1; i < conjunto.Length; i++)
     {
-        if (conjunto[i] != conjunto[i - 1])
-        {
+        if (conjunto[i] != conjunto[0])
             return false;
-        }
     }
     return true;
 }
@@ -302,9 +291,7 @@ static bool EsConjuntoEstrCreciente(decimal[] conjunto)
     for (int i = 1; i < conjunto.Length; i++)
     {
         if (conjunto[i] <= conjunto[i - 1])
-        {
             return false;
-        }
     }
     return true;
 }
@@ -314,9 +301,7 @@ static bool EsConjuntoCreciente(decimal[] conjunto)
     for (int i = 1; i < conjunto.Length; i++)
     {
         if (conjunto[i] < conjunto[i - 1])
-        {
             return false;
-        }
     }
     return true;
 }
@@ -326,9 +311,7 @@ static bool EsConjuntoEstrDecreciente(decimal[] conjunto)
     for (int i = 1; i < conjunto.Length; i++)
     {
         if (conjunto[i] >= conjunto[i - 1])
-        {
             return false;
-        }
     }
     return true;
 }
@@ -338,9 +321,7 @@ static bool EsConjuntoDecreciente(decimal[] conjunto)
     for (int i = 1; i < conjunto.Length; i++)
     {
         if (conjunto[i] > conjunto[i - 1])
-        {
             return false;
-        }
     }
     return true;
 }
