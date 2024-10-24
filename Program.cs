@@ -13,8 +13,8 @@ do
     switch (opcion)
     {
         case 1: // Sucesión aritmética
-            numeroInicial = validarEntradaNumerica("Ingrese el primer término");
-            razonOdiferencia = validarEntradaNumerica("Ingrese la diferencia");
+            numeroInicial = validarEntradaNumerica("Ingrese el primer término. Si el término es un número decimal, escríbalo con coma. Por ejemplo: 2,1.");
+            razonOdiferencia = validarEntradaNumerica("Ingrese la diferencia. Si el término es un número decimal, escríbalo con coma. Por ejemplo: 2,1.");
 
             do
             {
@@ -47,7 +47,7 @@ do
                     {
                         resultado = numeroInicial + i * razonOdiferencia;
                     }
-                    Console.WriteLine("a" + i + "=" + resultado);
+                    Console.WriteLine("a" + (i+1) + "=" + resultado);
                     break;
 
                 case 2:
@@ -57,7 +57,7 @@ do
                     for (i = 0; i < cantidadTerminos; i++)
                     {
                         resultado = numeroInicial + i * razonOdiferencia;
-                        Console.WriteLine("a" + i + "=" + resultado);
+                        Console.WriteLine("a" + (i+1) + "=" + resultado);
 
                     }
                     break;
@@ -124,10 +124,10 @@ do
 
                     for (i = 0; i < cantidadTerminos; i++)
                     {
-                        resultado = numeroInicial *= razonOdiferencia;
+                        resultado =  numeroInicial *= razonOdiferencia;
 
 
-                        Console.WriteLine("a" + i + "=" + resultado);
+                        Console.WriteLine("a" + (i+2) + "=" + resultado);
                     }
                     break;
 
@@ -193,7 +193,7 @@ do
             else if (esGeometrica)
                 Console.WriteLine("El conjunto es una sucesión geométrica.");
             else
-                Console.WriteLine("El conjunto no es una sucesión.");
+                Console.WriteLine("El conjunto no es una sucesión aritmética ni geométrica.");
 
 
             if (EsAlternante(conjunto))
@@ -281,7 +281,7 @@ static bool EsAritmeticaDecreciente(decimal razonOdiferencia) =>
 
 // Funciones para clasificaciones geométricas
 static bool EsGeomConstante(decimal razonOdiferencia) =>
-    razonOdiferencia == 1;
+    razonOdiferencia == 1 || razonOdiferencia == 0;
 
 static bool EsGeomEstrCreciente(decimal razonOdiferencia) =>
     razonOdiferencia > 1;
